@@ -1,6 +1,6 @@
 package com.telusko.quizapp.service;
 
-import com.telusko.quizapp.Question;
+import com.telusko.quizapp.model.Question;
 import com.telusko.quizapp.dao.QuestionDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,5 +30,9 @@ public class QuestionService {
     public String deleteQuestionById(String id) {
         questionDao.deleteById(Integer.valueOf(id));
         return "deleted";
+    }
+
+    public List<Question> getQuestionsByDifficultylevel(String level) {
+        return questionDao.findByDifficultylevel(level);
     }
 }
