@@ -38,11 +38,6 @@ public class QuizService {
         answers.forEach(answer->{
             Integer qid=answer.get("questionId").asInt();
             Question question=questionDao.findById(qid).orElse(null);
-            System.out.println(qid+"given answer");
-            System.out.println(answer.get("response").asText());
-            System.out.println("correct answer is:");
-            System.out.println(question.getRightAnswer());
-            System.out.println(Objects.equals(question.getRightAnswer(), answer.get("response").asText()));
             if(Objects.equals(question.getRightAnswer(), answer.get("response").asText())) score[0]++;
         });
         System.out.println(score[0]);
