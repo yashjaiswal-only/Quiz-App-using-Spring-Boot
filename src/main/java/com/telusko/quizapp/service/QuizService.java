@@ -1,5 +1,6 @@
 package com.telusko.quizapp.service;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.telusko.quizapp.dao.QuestionDao;
 import com.telusko.quizapp.dao.QuizDao;
 import com.telusko.quizapp.model.Question;
@@ -8,9 +9,7 @@ import com.telusko.quizapp.model.Quiz;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class QuizService {
@@ -34,4 +33,19 @@ public class QuizService {
     }
 
 
+    public String createQuiz(JsonNode answers) {
+        final Integer[] score = {0};
+        answers.forEach(answer->{
+            Integer qid=answer.get("questionId").asInt();
+            Question question=questionDao.findById(qid).orElse(null);
+            System.out.println(qid+"given answer");
+            System.out.println(answer.get("response").asText());
+            System.out.println("correct answer is:");
+            System.out.println(question.getRightAnswer());
+            System.out.println(Objects.equals(question.getRightAnswer(), answer.get("response").asText()));
+            if(Objects.equals(question.getRightAnswer(), answer.get("response").asText())) score[0]++;
+        });
+        System.out.println(score[0]);
+        return "Submitted , score: " + score[0].toString();
+    }
 }

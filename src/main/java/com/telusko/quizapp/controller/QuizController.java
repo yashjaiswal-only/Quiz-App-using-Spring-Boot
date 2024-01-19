@@ -10,10 +10,7 @@ import com.telusko.quizapp.service.QuizService;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequestMapping("quiz")
@@ -28,14 +25,8 @@ public class QuizController {
     }
 
     @PostMapping("submit")
-    public String ad(@RequestBody JsonNode body){
-        System.out.println(body.get("answer"));
-        body.get("answer").forEach(a->{
-            System.out.println(a.get("questionId"));
-            System.out.println(a.get("answer"));
-        });
-
-        return "SIb";
+    public String createQuiz(@RequestBody JsonNode body){
+        return quizService.createQuiz(body.get("answers"));
     }
 
 }
